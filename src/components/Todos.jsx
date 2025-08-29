@@ -7,7 +7,17 @@ import { TodoContext } from "../context/TodoContext";
 function Todos() {
   const [isOpen, setIsOpen] = useState(false);
   const { todos, dispatch } = useContext(TodoContext);
+
+  const handleDelete = (id) => {
+    dispatch({ type: "DELETE", payload: { id } });
+  };
+
+  const handleEdit = (id, title) => {
+    dispatch({ type: "EDIT", payload: { id, title } });
+  };
+
   console.log(todos);
+
   return (
     <>
       <div className="py-6">
@@ -24,7 +34,15 @@ function Todos() {
       </div>
       <div className="flex flex-col gap-6">
         {todos.length > 0 ? (
-          todos.map((todo, index) => <Todo key={index} todo={todo} />)
+          todos.map((todo, index) => (
+            <Todo
+              key={index}
+              todo={todo}
+              id={index}
+              handleDelete={handleDelete}
+              handleEdit={handleEdit}
+            />
+          ))
         ) : (
           <p className="text-center text-gray-500">
             No tasks available. Please add a task.
