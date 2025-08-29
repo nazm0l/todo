@@ -1,6 +1,11 @@
 import { Calendar, SquarePen, Trash2 } from "lucide-react";
+import { formatDate } from "../utils/formateDate";
 
-function Todo() {
+function Todo({ todo }) {
+  const { title, description, date } = todo;
+
+  const formattedDate = formatDate(date);
+
   return (
     <>
       <div className="grid grid-cols-12 items-center bg-white px-10 py-7 shadow-[0px_5px_10px_0px_rgba(0,_0,_0,_0.25)] rounded-lg">
@@ -14,16 +19,12 @@ function Todo() {
           />
         </div>
         <div className="col-span-6">
-          <h2 className="text-xl font-medium">Title</h2>
-          <p className="text-[#94A3B8] text-xs mt-1">
-            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ea
-            sapiente aperiam perferendis reprehenderit quas itaque, cupiditate
-            modi pariatur sit veniam.
-          </p>
+          <h2 className="text-xl font-medium">{title}</h2>
+          <p className="text-[#94A3B8] text-xs mt-1">{description}</p>
         </div>
         <div className="flex justify-center gap-3 col-span-3 text-[#A1A1AA]">
           <Calendar />
-          <p>Mon, 25 Aug 2025</p>
+          <p>{formattedDate}</p>
         </div>
         <div className="col-span-2 flex justify-end gap-5 text-[#A1A1AA]">
           <SquarePen className="w-6 h-6 cursor-pointer hover:text-[#15803D] transition" />

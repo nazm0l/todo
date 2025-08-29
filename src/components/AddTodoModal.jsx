@@ -1,6 +1,21 @@
 import { CircleX } from "lucide-react";
 
-function AddTodoModal({ isOpen, setIsOpen }) {
+function AddTodoModal({ isOpen, setIsOpen, dispatch }) {
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (!e.target.title.value) return;
+    const newTodo = {
+      title: e.target.title.value,
+      date: e.target.date.value,
+      description: e.target.description.value,
+      status: "active",
+    };
+    dispatch({ type: "ADD", payload: newTodo });
+    e.target.reset();
+
+    setIsOpen(false);
+  };
+
   return (
     <>
       <div
@@ -22,12 +37,13 @@ function AddTodoModal({ isOpen, setIsOpen }) {
               className="cursor-pointer"
             />
           </div>
-          <form className="mt-4">
+          <form className="mt-4" onSubmit={handleSubmit}>
             <label htmlFor="task">Title</label>
             <input
               type="text"
               name="title"
               id="task"
+              required
               className="w-full py-3 px-2.5 border border-[#A1A1AA] rounded mb-3"
             />
             <label htmlFor="date">Date</label>
