@@ -1,9 +1,14 @@
 import "./App.css";
+import Header from "./components/Header";
+import HeaderStats from "./components/HeaderStats";
 
 function App() {
   return (
     <>
-      <div className="text-4xl text-red-500 container mx-auto">Welcome</div>
+      <section className="container mx-auto p-4">
+        <HeaderStats />
+        <Header />
+      </section>
     </>
   );
 }
