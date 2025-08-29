@@ -49,6 +49,9 @@ function AddTodoModal({ isOpen, setIsOpen, dispatch }) {
             <label htmlFor="date">Date</label>
             <input
               type="date"
+              min={new Date().toLocaleDateString("en-CA", {
+                timeZone: "Asia/Dhaka",
+              })}
               name="date"
               id="date"
               className="w-full py-3 px-2.5 border border-[#A1A1AA] rounded mb-3"
