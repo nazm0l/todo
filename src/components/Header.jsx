@@ -1,6 +1,10 @@
+import { useContext } from "react";
 import logo from "../assets/logo.svg";
+import { TodoContext } from "../context/TodoContext";
 
 function Header() {
+  const { state, dispatch } = useContext(TodoContext);
+
   return (
     <>
       <div className="mt-6 bg-white drop-shadow-lg rounded-lg lg:h-[150px] px-2 lg:px-10 py-6 lg:py-12">
@@ -31,6 +35,13 @@ function Header() {
                 id="search"
                 placeholder="Search tasks..."
                 className="w-full bg-[#F8FAFC] border border-[#E2E8F0] rounded py-4 px-12 text-[#94A3B8] font-semibold text-xs focus:text-black"
+                value={state.searchTerm || ""}
+                onChange={(e) =>
+                  dispatch({
+                    type: "SET_SEARCH",
+                    payload: e.target.value,
+                  })
+                }
               />
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -43,6 +54,7 @@ function Header() {
                 stroke-linecap="round"
                 stroke-linejoin="round"
                 className="absolute top-3 right-3 cursor-pointer"
+                onClick={() => dispatch({ type: "SET_SEARCH", payload: "" })}
               >
                 <circle cx="12" cy="12" r="10" />
                 <path d="m15 9-6 6" />
@@ -54,6 +66,13 @@ function Header() {
                 name="todoSelect"
                 id=""
                 className="w-full appearance-none border py-3 px-6 rounded border-[#E2E8F0] "
+                value={state.filter}
+                onChange={(e) =>
+                  dispatch({
+                    type: "SET_FILTER",
+                    payload: e.target.value,
+                  })
+                }
               >
                 <option value="all">All</option>
                 <option value="active">Active</option>

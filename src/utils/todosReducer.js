@@ -1,32 +1,59 @@
-export function todosReducer(todos, action) {
+export function todosReducer(state, action) {
   switch (action.type) {
     case "ADD":
-      return [...todos, action.payload];
+      return {
+        ...state,
+        todos: [...state.todos, action.payload],
+      };
+
     case "TOGGLE":
-      return todos.map((todo, index) => {
-        if (index === action.payload.id) {
-          return {
-            ...todo,
-            status: todo.status === "active" ? "completed" : "active",
-          };
-        }
-        return todo;
-      });
+      return {
+        ...state,
+        todos: state.todos.map((todo, index) =>
+          index === action.payload.id
+            ? {
+                ...todo,
+                status: todo.status === "active" ? "completed" : "active",
+              }
+            : todo
+        ),
+      };
+
     case "EDIT":
-      return todos.map((todo, index) => {
-        if (index === action.payload.id) {
-          return {
-            ...todo,
-            title: action.payload.title,
-          };
-        }
-        return todo;
-      });
+      return {
+        ...state,
+        todos: state.todos.map((todo, index) =>
+          index === action.payload.id
+            ? { ...todo, title: action.payload.title }
+            : todo
+        ),
+      };
+
     case "DELETE":
-      return todos.filter((t, i) => i !== action.payload.id);
+      return {
+        ...state,
+        todos: state.todos.filter((_, i) => i !== action.payload.id),
+      };
+
     case "CLEAR_COMPLETED":
-      return todos.filter((t) => t.status !== "completed");
+      return {
+        ...state,
+        todos: state.todos.filter((t) => t.status !== "completed"),
+      };
+
+    case "SET_SEARCH":
+      return {
+        ...state,
+        searchTerm: action.payload,
+      };
+
+    case "SET_FILTER":
+      return {
+        ...state,
+        filter: action.payload,
+      };
+
     default:
-      return todos;
+      return state;
   }
 }

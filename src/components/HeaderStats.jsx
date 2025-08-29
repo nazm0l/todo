@@ -2,10 +2,12 @@ import { useContext } from "react";
 import { TodoContext } from "../context/TodoContext";
 
 function HeaderStats() {
-  const { todos } = useContext(TodoContext);
+  const { state } = useContext(TodoContext);
 
-  const totalTodos = todos.length;
-  const activeTodos = todos.filter((todo) => todo.status === "active").length;
+  const totalTodos = state.todos.length;
+  const activeTodos = state.todos.filter(
+    (todo) => todo.status === "active"
+  ).length;
   const completedTodos = totalTodos - activeTodos;
 
   return (

@@ -6,7 +6,10 @@ import { TodoContext } from "../context/TodoContext";
 
 function Todos() {
   const [isOpen, setIsOpen] = useState(false);
-  const { todos, dispatch } = useContext(TodoContext);
+  const { state, dispatch } = useContext(TodoContext);
+
+  const { todos, searchTerm, filter } = state;
+  console.log(state);
 
   const handleDelete = (id) => {
     dispatch({ type: "DELETE", payload: { id } });
@@ -16,7 +19,27 @@ function Todos() {
     dispatch({ type: "EDIT", payload: { id, title } });
   };
 
-  console.log(todos);
+  const handleToggle = (id) => {
+    dispatch({ type: "TOGGLE", payload: { id } });
+  };
+
+  const filteredTodos = todos.filter((todo) => {
+    const matchesSearch =
+      todo.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      todo.description.toLowerCase().includes(searchTerm.toLowerCase());
+
+    let matchesFilter;
+
+    if (filter === "all") {
+      matchesFilter = true;
+    } else if (state.filter === "active") {
+      matchesFilter = todo.status === "active";
+    } else {
+      matchesFilter = todo.status === "completed";
+    }
+
+    return matchesSearch && matchesFilter;
+  });
 
   return (
     <>
@@ -33,14 +56,15 @@ function Todos() {
         </div>
       </div>
       <div className="flex flex-col gap-6">
-        {todos.length > 0 ? (
-          todos.map((todo, index) => (
+        {state.todos.length > 0 ? (
+          filteredTodos.map((todo, index) => (
             <Todo
               key={index}
               todo={todo}
               id={index}
               handleDelete={handleDelete}
               handleEdit={handleEdit}
+              handleToggle={handleToggle}
             />
           ))
         ) : (

@@ -2,7 +2,7 @@ import { Calendar, SquarePen, Trash2 } from "lucide-react";
 import { formatDate } from "../utils/formateDate";
 import { useState } from "react";
 
-function Todo({ id, todo, handleDelete, handleEdit }) {
+function Todo({ id, todo, handleDelete, handleEdit, handleToggle }) {
   const [isEditing, setIsEditing] = useState(false);
   const [newTitle, setNewTitle] = useState(todo.title);
 
@@ -18,8 +18,10 @@ function Todo({ id, todo, handleDelete, handleEdit }) {
             type="checkbox"
             name="completed"
             id="completed"
+            checked={todo.status === "completed"}
             className="appearance-none w-10 h-10 mx-auto border-2 border-gray-300 rounded-sm bg-white
               checked:border-green-500 checked:bg-no-repeat checked:bg-center checked:bg-green-300 cursor-pointer"
+            onChange={() => handleToggle(id)}
           />
         </div>
         <div className="col-span-6">

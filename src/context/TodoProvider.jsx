@@ -3,10 +3,16 @@ import { todosReducer } from "../utils/todosReducer";
 import { TodoContext } from "./TodoContext";
 
 const TodoProvider = ({ children }) => {
-  const [todos, dispatch] = useReducer(todosReducer, []);
+  const initialState = {
+    todos: [],
+    searchTerm: "",
+    filter: "all",
+  };
+
+  const [state, dispatch] = useReducer(todosReducer, initialState);
 
   return (
-    <TodoContext.Provider value={{ todos, dispatch }}>
+    <TodoContext.Provider value={{ state, dispatch }}>
       {children}
     </TodoContext.Provider>
   );
