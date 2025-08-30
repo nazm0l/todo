@@ -57,11 +57,10 @@ function Todos() {
       </div>
       <div className="flex flex-col gap-6">
         {state.todos.length > 0 ? (
-          filteredTodos.map((todo, index) => (
+          filteredTodos.map((todo) => (
             <Todo
-              key={index}
+              key={todo.id}
               todo={todo}
-              id={index}
               handleDelete={handleDelete}
               handleEdit={handleEdit}
               handleToggle={handleToggle}

@@ -1,10 +1,12 @@
 import { CircleX } from "lucide-react";
+import { v4 as uuidv4 } from 'uuid'
 
 function AddTodoModal({ isOpen, setIsOpen, dispatch }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!e.target.title.value) return;
     const newTodo = {
+      id: uuidv4(),
       title: e.target.title.value,
       date: e.target.date.value,
       description: e.target.description.value,

@@ -9,8 +9,8 @@ export function todosReducer(state, action) {
     case "TOGGLE":
       return {
         ...state,
-        todos: state.todos.map((todo, index) =>
-          index === action.payload.id
+        todos: state.todos.map((todo) =>
+          todo.id === action.payload.id
             ? {
                 ...todo,
                 status: todo.status === "active" ? "completed" : "active",
@@ -22,8 +22,8 @@ export function todosReducer(state, action) {
     case "EDIT":
       return {
         ...state,
-        todos: state.todos.map((todo, index) =>
-          index === action.payload.id
+        todos: state.todos.map((todo) =>
+          todo.id === action.payload.id
             ? { ...todo, title: action.payload.title }
             : todo
         ),
@@ -32,13 +32,13 @@ export function todosReducer(state, action) {
     case "DELETE":
       return {
         ...state,
-        todos: state.todos.filter((_, i) => i !== action.payload.id),
+        todos: state.todos.filter((todo) => todo.id !== action.payload.id),
       };
 
     case "CLEAR_COMPLETED":
       return {
         ...state,
-        todos: state.todos.filter((t) => t.status !== "completed"),
+        todos: state.todos.filter((todo) => todo.status !== "completed"),
       };
 
     case "SET_SEARCH":

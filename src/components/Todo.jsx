@@ -2,7 +2,7 @@ import { Calendar, SquarePen, Trash2 } from "lucide-react";
 import { formatDate } from "../utils/formateDate";
 import { useState } from "react";
 
-function Todo({ id, todo, handleDelete, handleEdit, handleToggle }) {
+function Todo({ todo, handleDelete, handleEdit, handleToggle }) {
   const [isEditing, setIsEditing] = useState(false);
   const [newTitle, setNewTitle] = useState(todo.title);
 
@@ -21,7 +21,7 @@ function Todo({ id, todo, handleDelete, handleEdit, handleToggle }) {
             checked={todo.status === "completed"}
             className=" w-7 h-7 lg:w-10 lg:h-10 border-2 border-gray-300 rounded-sm
                  checked:border-green-600checked:bg-green-500 checked:bg-center checked:bg-no-repeat cursor-pointer"
-            onChange={() => handleToggle(id)}
+            onChange={() => handleToggle(todo.id)}
           />
         </div>
         <div className="col-span-10 lg:col-span-6">
@@ -33,13 +33,13 @@ function Todo({ id, todo, handleDelete, handleEdit, handleToggle }) {
                 onChange={(e) => setNewTitle(e.target.value)}
                 onBlur={() => {
                   if (todo.status === "completed") return;
-                  handleEdit(id, newTitle);
+                  handleEdit(todo.id, newTitle);
                   setIsEditing(false);
                 }}
                 onKeyDown={(e) => {
                   if (todo.status === "completed") return;
                   if (e.key === "Enter") {
-                    handleEdit(id, newTitle);
+                    handleEdit(todo.id, newTitle);
                     setIsEditing(false);
                   }
                 }}
@@ -65,7 +65,7 @@ function Todo({ id, todo, handleDelete, handleEdit, handleToggle }) {
           )}
           <Trash2
             className="w-6 h-6 cursor-pointer hover:text-red-300 transition"
-            onClick={() => handleDelete(id)}
+            onClick={() => handleDelete(todo.id)}
           />
         </div>
       </div>
